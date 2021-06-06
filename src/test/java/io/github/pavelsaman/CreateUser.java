@@ -82,7 +82,9 @@ public class CreateUser {
                 .and()
                 .body("", hasKey("id"))
                 .and()
-                .body("", hasKey("createdAt"));
+                .body("", hasKey("createdAt"))
+                .and()
+                .body("keySet()", hasSize(4));
     }
 
     @Test
@@ -98,7 +100,9 @@ public class CreateUser {
                 .and()
                 .body("", hasKey("id"))
                 .and()
-                .body("", hasKey("createdAt"));
+                .body("", hasKey("createdAt"))
+                .and()
+                .body("keySet()", hasSize(2));
     }
 
     @Test
@@ -108,7 +112,7 @@ public class CreateUser {
                 .post()
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+                .statusCode(HttpStatus.SC_CREATED);
     }
 
     @Test
@@ -119,7 +123,22 @@ public class CreateUser {
                 .post()
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
+                .statusCode(HttpStatus.SC_CREATED);
+    }
+
+    @Test
+    public void createUserWithEmptyRequestBodyAssertResponseBody() {
+        given()
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body("{}")
+                .post()
+                .then()
+                .assertThat()
+                .body("", hasKey("createdAt"))
+                .and()
+                .body("", hasKey("id"))
+                .and()
+                .body("keySet()", hasSize(2));
     }
 
     @Test(dataProvider = "random-user")

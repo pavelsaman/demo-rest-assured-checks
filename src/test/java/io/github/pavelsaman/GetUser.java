@@ -57,7 +57,9 @@ public class GetUser {
                 .assertThat()
                 .body("", hasKey("data"))
                 .and()
-                .body("", hasKey("support"));
+                .body("", hasKey("support"))
+                .and()
+                .body("keySet()", hasSize(2));
     }
 
     @Test
@@ -73,6 +75,8 @@ public class GetUser {
                 .and()
                 .body("data", hasKey("last_name"))
                 .and()
-                .body("data", hasKey("avatar"));
+                .body("data", hasKey("avatar"))
+                .and()
+                .body("data.keySet()", hasSize(5));
     }
 }

@@ -52,7 +52,9 @@ public class GetUsers {
                 .and()
                 .body("data[0]", hasKey("last_name"))
                 .and()
-                .body("data[0]", hasKey("avatar"));
+                .body("data[0]", hasKey("avatar"))
+                .and()
+                .body("data[0].keySet()", hasSize(5));
     }
 
     @Test
