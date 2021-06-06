@@ -60,7 +60,7 @@ public class CreateUser {
     @Test
     public void createUserAssertStatusLine() {
         given()
-                .header("Content-Type", "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(gson.toJson(user))
                 .post()
                 .then()
@@ -71,7 +71,7 @@ public class CreateUser {
     @Test
     public void createUserAssertResponseBodyContainsKeys() {
         given()
-                .header("Content-Type", "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(gson.toJson(user))
                 .post()
                 .then()
@@ -104,7 +104,7 @@ public class CreateUser {
     @Test
     public void createUserWithNoRequestBodyAssertStatusCode() {
         given()
-                .header("Content-Type", "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .post()
                 .then()
                 .assertThat()
@@ -114,7 +114,7 @@ public class CreateUser {
     @Test
     public void createUserWithEmptyRequestBodyAssertStatusCode() {
         given()
-                .header("Content-Type", "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body("{}")
                 .post()
                 .then()
@@ -125,7 +125,7 @@ public class CreateUser {
     @Test(dataProvider = "random-user")
     public void createRandomUserAssertResponseBody(UserBody randomUser) {
         given()
-                .header("Content-Type", "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(gson.toJson(randomUser))
                 .post()
                 .then()
