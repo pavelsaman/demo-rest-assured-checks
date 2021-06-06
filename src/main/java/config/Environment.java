@@ -1,4 +1,4 @@
-package io.github.pavelsaman;
+package config;
 
 public enum Environment {
     DEV("https://reqres.dev.in"),

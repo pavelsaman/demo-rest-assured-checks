@@ -1,5 +1,6 @@
-package io.github.pavelsaman;
+package users;
 
+import config.Config;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

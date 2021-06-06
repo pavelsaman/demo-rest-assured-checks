@@ -1,4 +1,4 @@
-package io.github.pavelsaman;
+package config;
 
 import java.util.HashMap;
 import java.util.Map;

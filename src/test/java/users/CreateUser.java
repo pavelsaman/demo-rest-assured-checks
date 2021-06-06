@@ -1,6 +1,7 @@
-package io.github.pavelsaman;
+package users;
 
 import com.google.gson.Gson;
+import config.Config;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
