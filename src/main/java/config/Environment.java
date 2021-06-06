@@ -1,6 +1,6 @@
 package config;
 
-public enum Environment {
+enum Environment {
     DEV("https://reqres.dev.in"),
     STAGING("https://reqres.staging.in"),
     PROD("https://reqres.in");
