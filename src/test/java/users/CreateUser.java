@@ -17,22 +17,6 @@ public class CreateUser {
     private final Gson gson = new Gson();
     private final UserBody user = new UserBody();
 
-    private static class UserBody {
-
-        private final String name;
-        private final String job;
-
-        public UserBody() {
-            this.name = "morpheus";
-            this.job = "leader";
-        }
-
-        public UserBody(String name, String job) {
-            this.name = name;
-            this.job = job;
-        }
-    }
-
     @DataProvider(name = "random-user")
     public Object[][] randomUser() {
         String randomName = RandomStringUtils.random(10, true, false);
@@ -150,8 +134,8 @@ public class CreateUser {
                 .post()
                 .then()
                 .assertThat()
-                .body("name", equalTo(randomUser.name))
+                .body("name", equalTo(randomUser.getName()))
                 .and()
-                .body("job", equalTo(randomUser.job));
+                .body("job", equalTo(randomUser.getJob()));
     }
 }
