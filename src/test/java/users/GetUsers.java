@@ -18,51 +18,61 @@ public class GetUsers {
 
     @Test
     public void getUsersAssertStatusCode() {
-        get()
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK);
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
     public void getUsersAssertStatusLine() {
-        get()
-                .then()
-                .assertThat()
-                .statusLine(containsString("OK"));
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .statusLine(containsString("OK"));
     }
 
     @Test
     public void getUsersAssertResponseContainsDataKey() {
-        get()
-                .then()
-                .assertThat()
-                .body("", hasKey("data"));
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .body("", hasKey("data"));
     }
 
     @Test
     public void getUsersAssertDataObjectContainsKeys() {
-        get()
-                .then()
-                .assertThat()
-                .body("data[0]", hasKey("id"))
-                .and()
-                .body("data[0]", hasKey("email"))
-                .and()
-                .body("data[0]", hasKey("first_name"))
-                .and()
-                .body("data[0]", hasKey("last_name"))
-                .and()
-                .body("data[0]", hasKey("avatar"))
-                .and()
-                .body("data[0].keySet()", hasSize(5));
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .body("data[0]", hasKey("id"))
+        .and()
+            .body("data[0]", hasKey("email"))
+        .and()
+            .body("data[0]", hasKey("first_name"))
+        .and()
+            .body("data[0]", hasKey("last_name"))
+        .and()
+            .body("data[0]", hasKey("avatar"))
+        .and()
+            .body("data[0].keySet()", hasSize(5));
     }
 
     @Test
     public void getUsersAssertDataArraySizeIsGreaterThanOne() {
-        get()
-                .then()
-                .assertThat()
-                .body("data.size()", greaterThan(1));
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .body("data.size()", greaterThan(1));
     }
 }

@@ -34,108 +34,116 @@ public class CreateUser {
     @Test
     public void createUserAssertStatusCode() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body(gson.toJson(user))
-                .post()
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_CREATED);
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(user))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_CREATED);
     }
 
     @Test
     public void createUserAssertStatusLine() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body(gson.toJson(user))
-                .post()
-                .then()
-                .assertThat()
-                .statusLine(containsString("Created"));
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(user))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .statusLine(containsString("Created"));
     }
 
     @Test
     public void createUserAssertResponseBodyContainsKeys() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body(gson.toJson(user))
-                .post()
-                .then()
-                .assertThat()
-                .body("", hasKey("name"))
-                .and()
-                .body("", hasKey("job"))
-                .and()
-                .body("", hasKey("id"))
-                .and()
-                .body("", hasKey("createdAt"))
-                .and()
-                .body("keySet()", hasSize(4));
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(user))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("", hasKey("name"))
+        .and()
+            .body("", hasKey("job"))
+        .and()
+            .body("", hasKey("id"))
+        .and()
+            .body("", hasKey("createdAt"))
+        .and()
+            .body("keySet()", hasSize(4));
     }
 
     @Test
     public void createUserWithNoHeaderAssertResponseBody() {
         given()
-                .body(gson.toJson(user))
-                .post()
-                .then()
-                .assertThat()
-                .body("", not(hasKey("name")))
-                .and()
-                .body("", not(hasKey("job")))
-                .and()
-                .body("", hasKey("id"))
-                .and()
-                .body("", hasKey("createdAt"))
-                .and()
-                .body("keySet()", hasSize(2));
+            .body(gson.toJson(user))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("", not(hasKey("name")))
+        .and()
+            .body("", not(hasKey("job")))
+        .and()
+            .body("", hasKey("id"))
+        .and()
+            .body("", hasKey("createdAt"))
+        .and()
+            .body("keySet()", hasSize(2));
     }
 
     @Test
     public void createUserWithNoRequestBodyAssertStatusCode() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .post()
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_CREATED);
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_CREATED);
     }
 
     @Test
     public void createUserWithEmptyRequestBodyAssertStatusCode() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body("{}")
-                .post()
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_CREATED);
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body("{}")
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_CREATED);
     }
 
     @Test
     public void createUserWithEmptyRequestBodyAssertResponseBody() {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body("{}")
-                .post()
-                .then()
-                .assertThat()
-                .body("", hasKey("createdAt"))
-                .and()
-                .body("", hasKey("id"))
-                .and()
-                .body("keySet()", hasSize(2));
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body("{}")
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("", hasKey("createdAt"))
+        .and()
+            .body("", hasKey("id"))
+        .and()
+            .body("keySet()", hasSize(2));
     }
 
     @Test(dataProvider = "random-user")
     public void createRandomUserAssertResponseBody(UserBody randomUser) {
         given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body(gson.toJson(randomUser))
-                .post()
-                .then()
-                .assertThat()
-                .body("name", equalTo(randomUser.getName()))
-                .and()
-                .body("job", equalTo(randomUser.getJob()));
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(randomUser))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("name", equalTo(randomUser.getName()))
+        .and()
+            .body("job", equalTo(randomUser.getJob()));
     }
 }

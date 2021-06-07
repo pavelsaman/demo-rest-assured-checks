@@ -21,63 +21,75 @@ public class GetUser {
 
     @Test
     public void userNotFoundAssertStatusCode() {
-        get(nonExistentUserId)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_NOT_FOUND);
+        given()
+        .when()
+            .get(nonExistentUserId)
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
     public void userNotFoundAssertEmptyBody() {
-        get(nonExistentUserId)
-                .then()
-                .assertThat()
-                .body("isEmpty()", is(true));
+        given()
+        .when()
+            .get(nonExistentUserId)
+        .then()
+            .assertThat()
+            .body("isEmpty()", is(true));
     }
 
     @Test
     public void userFoundAssertStatusCode() {
-        get(existingUserId)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK);
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_OK);
     }
 
     @Test
     public void userFoundAssertNonEmptyBody() {
-        get(existingUserId)
-                .then()
-                .assertThat()
-                .body("isEmpty()", is(false));
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .body("isEmpty()", is(false));
     }
 
     @Test
     public void userFoundAssertResponseBodyContainsKeys() {
-        get(existingUserId)
-                .then()
-                .assertThat()
-                .body("", hasKey("data"))
-                .and()
-                .body("", hasKey("support"))
-                .and()
-                .body("keySet()", hasSize(2));
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .body("", hasKey("data"))
+        .and()
+            .body("", hasKey("support"))
+        .and()
+            .body("keySet()", hasSize(2));
     }
 
     @Test
     public void userFoundAssertDataObjectContainsKeys() {
-        get(existingUserId)
-                .then()
-                .assertThat()
-                .body("data", hasKey("id"))
-                .and()
-                .body("data", hasKey("email"))
-                .and()
-                .body("data", hasKey("first_name"))
-                .and()
-                .body("data", hasKey("last_name"))
-                .and()
-                .body("data", hasKey("avatar"))
-                .and()
-                .body("data.keySet()", hasSize(5));
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .body("data", hasKey("id"))
+        .and()
+            .body("data", hasKey("email"))
+        .and()
+            .body("data", hasKey("first_name"))
+        .and()
+            .body("data", hasKey("last_name"))
+        .and()
+            .body("data", hasKey("avatar"))
+        .and()
+            .body("data.keySet()", hasSize(5));
     }
 }
