@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class CreateUser {
 
@@ -41,6 +42,18 @@ public class CreateUser {
         .then()
             .assertThat()
             .statusCode(HttpStatus.SC_CREATED);
+    }
+
+    @Test
+    public void createUserValidateResponseBody() {
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(user))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("userCreate-schema.json"));
     }
 
     @Test

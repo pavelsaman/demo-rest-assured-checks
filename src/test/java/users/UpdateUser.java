@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class UpdateUser {
 
@@ -60,5 +61,21 @@ public class UpdateUser {
         .then()
             .assertThat()
             .body("job", equalTo("qa"));
+    }
+
+    @Test
+    public void updateUserValidateResponseBody() {
+        UserBody randomUser = new UserBody();
+        String userId = createRandomUserAndGetId(randomUser);
+        randomUser.setJob("qa");
+
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(randomUser))
+        .when()
+            .put(userId)
+        .then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("userUpdate-schema.json"));
     }
 }

@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class GetUsers {
 
@@ -24,6 +25,61 @@ public class GetUsers {
         .then()
             .assertThat()
             .statusCode(HttpStatus.SC_OK);
+    }
+
+    @Test
+    public void getUsersAssertValidateResponseBody() {
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("users-schema.json"));
+    }
+
+    @Test
+    public void getUsersAssertPaginationQueryParamWorks() {
+        given()
+            .queryParam("page", "2")
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_OK)
+        .and()
+            .body("data.size()", greaterThan(0));
+    }
+
+    @Test
+    public void getUsersWrongPaginationAssertGetPageOne() {
+        given()
+            .queryParam("page", "abc")
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_OK)
+        .and()
+            .body("page", equalTo(1));
+    }
+
+    @Test
+    public void getUsersBeyondLastPageAssertEmptyDataArray() {
+        int lastPage = given()
+                .queryParam("page", "abc")
+            .when()
+                .get()
+            .then()
+                .extract()
+                .path("total");
+
+        given()
+            .queryParam("page", lastPage + 1)
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .body("data.size()", equalTo(0));
     }
 
     @Test
@@ -74,5 +130,15 @@ public class GetUsers {
         .then()
             .assertThat()
             .body("data.size()", greaterThan(1));
+    }
+
+    @Test
+    public void getUsersAssertResponseTimeLessThanOneSecond() {
+        given()
+        .when()
+            .get()
+        .then()
+            .assertThat()
+            .time(lessThan(1000L));
     }
 }

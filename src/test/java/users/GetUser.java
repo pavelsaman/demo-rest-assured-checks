@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class GetUser {
 
@@ -27,6 +28,16 @@ public class GetUser {
         .then()
             .assertThat()
             .statusCode(HttpStatus.SC_NOT_FOUND);
+    }
+
+    @Test
+    public void getUserValidateResponseBody() {
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("userDetail-schema.json"));
     }
 
     @Test
@@ -91,5 +102,15 @@ public class GetUser {
             .body("data", hasKey("avatar"))
         .and()
             .body("data.keySet()", hasSize(5));
+    }
+
+    @Test
+    public void getUserAssertResponseTimeLessThanOneSecond() {
+        given()
+        .when()
+            .get(existingUserId)
+        .then()
+            .assertThat()
+            .time(lessThan(1000L));
     }
 }
