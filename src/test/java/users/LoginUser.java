@@ -37,6 +37,19 @@ public class LoginUser {
             .statusLine(containsString("OK"));
     }
 
+    @Test
+    public void successfulLoginAssertResponseTime() {
+        Login validCredentials = new Login(System.getenv("EMAIL"), System.getenv("PASSWORD"));
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(validCredentials))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .time(lessThan(Config.maxResponseTime));
+    }
+
     @Test(dataProvider = "valid-credentials", dataProviderClass = LoginDataProvider.class)
     public void successfulLoginValidateResponse(Login validCredentials) {
         given()
