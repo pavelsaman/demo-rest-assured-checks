@@ -8,6 +8,7 @@
             <class name="users.CreateUser" />
             <class name="users.UpdateUser" />
             <class name="users.DeleteUser" />
+            <class name="users.LoginUser" />
         </classes>
     </test>
 </suite>

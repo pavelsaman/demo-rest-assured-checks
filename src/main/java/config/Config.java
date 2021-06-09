@@ -15,4 +15,12 @@ public class Config {
 
         return envs.get((System.getenv("ENV") != null) ? System.getenv("ENV") : "PROD");
     }
+
+    public static Map<String, String> getUserCredentials() {
+        Map<String, String> credentials = new HashMap<>();
+        credentials.put("email", System.getenv("EMAIL"));
+        credentials.put("password", System.getenv("PASSWORD"));
+
+        return credentials;
+    }
 }
