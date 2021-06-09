@@ -2,11 +2,9 @@ package users;
 
 import com.google.gson.Gson;
 import config.Config;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import users.support.User;
 import users.support.UserDataProvider;
@@ -60,26 +58,6 @@ public class CreateUser {
         .then()
             .assertThat()
             .statusLine(containsString("Created"));
-    }
-
-    @Test
-    public void createUserAssertResponseBodyContainsKeys() {
-        given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
-            .body(gson.toJson(user))
-        .when()
-            .post()
-        .then()
-            .assertThat()
-            .body("", hasKey("name"))
-        .and()
-            .body("", hasKey("job"))
-        .and()
-            .body("", hasKey("id"))
-        .and()
-            .body("", hasKey("createdAt"))
-        .and()
-            .body("keySet()", hasSize(4));
     }
 
     @Test
@@ -152,5 +130,47 @@ public class CreateUser {
             .body("name", equalTo(randomUser.getName()))
         .and()
             .body("job", equalTo(randomUser.getJob()));
+    }
+
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void createUserWithMalformedRequestBodyAssertResponse(User randomUser) {
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(randomUser) + ",")
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_BAD_REQUEST)
+        .and()
+            .contentType(containsString("application/json"));
+    }
+
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void createUserWithIdAssertIdIsNotAccepted(User randomUser) {
+        randomUser.setId("15");
+
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(randomUser))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("id", not(equalTo(randomUser.getId())));
+    }
+
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void createUserWithCreatedAtAssertCreatedAtIsNotAccepted(User randomUser) {
+        randomUser.setCreatedAt("2021-06-09T18:32:05.161Z");
+
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(randomUser))
+        .when()
+            .post()
+        .then()
+            .assertThat()
+            .body("createdAt", not(equalTo(randomUser.getCreatedAt())));
     }
 }

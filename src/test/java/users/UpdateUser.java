@@ -6,6 +6,7 @@ import org.apache.http.HttpHeaders;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import users.support.User;
+import users.support.UserDataProvider;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -48,9 +49,8 @@ public class UpdateUser {
             .body("name", equalTo("pavel"));
     }
 
-    @Test
-    public void updateUserJobAssertStatusCode() {
-        User randomUser = new User();
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void updateUserJobAssertStatusCode(User randomUser) {
         String userId = createRandomUserAndGetId(randomUser);
         randomUser.setJob("qa");
 
@@ -64,9 +64,8 @@ public class UpdateUser {
             .body("job", equalTo("qa"));
     }
 
-    @Test
-    public void updateUserValidateResponseBody() {
-        User randomUser = new User();
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void updateUserValidateResponseBody(User randomUser) {
         String userId = createRandomUserAndGetId(randomUser);
         randomUser.setJob("qa");
 
