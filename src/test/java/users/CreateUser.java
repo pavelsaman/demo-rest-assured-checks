@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import users.support.User;
+import users.support.UserDataProvider;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -17,15 +18,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class CreateUser {
 
     private final Gson gson = new Gson();
-    private final User user = new User();
-
-    @DataProvider(name = "random-user")
-    public Object[][] randomUser() {
-        String randomName = RandomStringUtils.random(10, true, false);
-        String randomJob = RandomStringUtils.random(8, true, false);
-
-        return new Object[][] { { new User(randomName, randomJob) } };
-    }
+    private final User user = new User("Pavel Saman", "Tester");
 
     @BeforeClass
     public void setup() {
@@ -147,7 +140,7 @@ public class CreateUser {
             .body("keySet()", hasSize(2));
     }
 
-    @Test(dataProvider = "random-user")
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void createRandomUserAssertResponseBody(User randomUser) {
         given()
             .header(HttpHeaders.CONTENT_TYPE, "application/json")
