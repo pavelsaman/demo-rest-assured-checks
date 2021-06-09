@@ -29,8 +29,16 @@ public class User {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getJob() {
         return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 
     public String getCreatedAt() {
@@ -39,13 +47,5 @@ public class User {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
     }
 }
