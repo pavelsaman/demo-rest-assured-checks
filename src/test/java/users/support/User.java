@@ -1,16 +1,16 @@
-package users;
+package users.support;
 
-class UserBody {
+public class User {
 
     private String name;
     private String job;
 
-    public UserBody() {
+    public User() {
         this.name = "morpheus";
         this.job = "leader";
     }
 
-    public UserBody(String name, String job) {
+    public User(String name, String job) {
         this.name = name;
         this.job = job;
     }

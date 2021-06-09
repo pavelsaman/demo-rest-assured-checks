@@ -5,6 +5,7 @@ import config.Config;
 import org.apache.http.HttpHeaders;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import users.support.User;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -20,7 +21,7 @@ public class UpdateUser {
         basePath = "/api/users";
     }
 
-    private String createRandomUserAndGetId(UserBody randomUser) {
+    private String createRandomUserAndGetId(User randomUser) {
         return given()
                 .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 .body(gson.toJson(randomUser))
@@ -33,7 +34,7 @@ public class UpdateUser {
 
     @Test
     public void updateUserNameAssertStatusLine() {
-        UserBody randomUser = new UserBody();
+        User randomUser = new User();
         String userId = createRandomUserAndGetId(randomUser);
         randomUser.setName("pavel");
 
@@ -49,7 +50,7 @@ public class UpdateUser {
 
     @Test
     public void updateUserJobAssertStatusCode() {
-        UserBody randomUser = new UserBody();
+        User randomUser = new User();
         String userId = createRandomUserAndGetId(randomUser);
         randomUser.setJob("qa");
 
@@ -65,7 +66,7 @@ public class UpdateUser {
 
     @Test
     public void updateUserValidateResponseBody() {
-        UserBody randomUser = new UserBody();
+        User randomUser = new User();
         String userId = createRandomUserAndGetId(randomUser);
         randomUser.setJob("qa");
 

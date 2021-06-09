@@ -139,6 +139,6 @@ public class GetUsers {
             .get()
         .then()
             .assertThat()
-            .time(lessThan(1000L));
+            .time(lessThan(Config.maxResponseTime));
     }
 }

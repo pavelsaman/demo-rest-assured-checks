@@ -111,6 +111,6 @@ public class GetUser {
             .get(existingUserId)
         .then()
             .assertThat()
-            .time(lessThan(1000L));
+            .time(lessThan(Config.maxResponseTime));
     }
 }

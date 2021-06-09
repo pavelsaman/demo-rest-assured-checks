@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="reqres REST API">
+    <test name="Regression checks">
+        <classes>
+            <class name="users.GetUsers" />
+            <class name="users.GetUser" />
+            <class name="users.CreateUser" />
+            <class name="users.UpdateUser" />
+        </classes>
+    </test>
+</suite>
