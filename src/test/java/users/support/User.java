@@ -1,16 +1,15 @@
 package users.support;
 
+import org.apache.http.HttpHeaders;
+
+import static io.restassured.RestAssured.given;
+
 public class User {
 
     private String id;
     private String name;
     private String job;
     private String createdAt;
-
-    public User() {
-        this.name = "morpheus";
-        this.job = "leader";
-    }
 
     public User(String name, String job) {
         this.name = name;
@@ -47,5 +46,16 @@ public class User {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String create(String userJSONString) {
+        return given()
+                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .body(userJSONString)
+            .when()
+                .post()
+            .then()
+                .extract()
+                .path("id");
     }
 }

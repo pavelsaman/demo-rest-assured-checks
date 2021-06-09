@@ -9,7 +9,7 @@ import users.support.User;
 import users.support.UserDataProvider;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class UpdateUser {
@@ -22,21 +22,9 @@ public class UpdateUser {
         basePath = "/api/users";
     }
 
-    private String createRandomUserAndGetId(User randomUser) {
-        return given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
-                .body(gson.toJson(randomUser))
-            .when()
-                .post()
-            .then()
-                .extract()
-                .path("id");
-    }
-
-    @Test
-    public void updateUserNameAssertStatusLine() {
-        User randomUser = new User();
-        String userId = createRandomUserAndGetId(randomUser);
+    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
+    public void updateUserNameAssertStatusLine(User randomUser) {
+        String userId = randomUser.create(gson.toJson(randomUser));
         randomUser.setName("pavel");
 
         given()
@@ -51,7 +39,7 @@ public class UpdateUser {
 
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void updateUserJobAssertStatusCode(User randomUser) {
-        String userId = createRandomUserAndGetId(randomUser);
+        String userId = randomUser.create(gson.toJson(randomUser));
         randomUser.setJob("qa");
 
         given()
@@ -66,7 +54,7 @@ public class UpdateUser {
 
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void updateUserValidateResponseBody(User randomUser) {
-        String userId = createRandomUserAndGetId(randomUser);
+        String userId = randomUser.create(gson.toJson(randomUser));
         randomUser.setJob("qa");
 
         given()
