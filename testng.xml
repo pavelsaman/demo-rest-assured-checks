@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="reqres REST API">
-    <test name="Regression checks">
+<suite name="reqres REST API checks">
+    <test name="Get Users">
         <classes>
             <class name="users.GetUsers" />
+        </classes>
+    </test>
+    <test name="Get User">
+        <classes>
             <class name="users.GetUser" />
+        </classes>
+    </test>
+    <test name="Create User">
+        <classes>
             <class name="users.CreateUser" />
+        </classes>
+    </test>
+    <test name="Update User">
+        <classes>
             <class name="users.UpdateUser" />
+        </classes>
+    </test>
+    <test name="Delete User">
+        <classes>
             <class name="users.DeleteUser" />
+        </classes>
+    </test>
+    <test name="Login User">
+        <classes>
             <class name="users.LoginUser" />
+        </classes>
+    </test>
+    <test name="Register User">
+        <classes>
+            <class name="users.RegisterUser" />
         </classes>
     </test>
 </suite>
