@@ -143,6 +143,8 @@ public class CreateUser {
             .assertThat()
             .statusCode(HttpStatus.SC_BAD_REQUEST)
         .and()
+            .statusLine(containsString("Bad Request"))
+        .and()
             .contentType(containsString("application/json"));
     }
 
