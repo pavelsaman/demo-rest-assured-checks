@@ -5,15 +5,14 @@ import java.util.Map;
 
 public class Config {
 
-    public static final long maxResponseTime = 1000L;
+    public static final long MAX_RESPONSE_TIME = 1000L;
+    private static final String DEFAULT_ENV = "PROD";
 
     public static String getBaseUrl() {
-        Map<String, String> envs = new HashMap<>();
-        for (Environment env : Environment.values()) {
-            envs.put(env.getEnvName(), env.getUrl());
-        }
-
-        return envs.get((System.getenv("ENV") != null) ? System.getenv("ENV") : "PROD");
+        Environment env = new Environment(
+            System.getenv("ENV") != null ? System.getenv("ENV") : DEFAULT_ENV
+        );
+        return env.getUrl();
     }
 
     public static Map<String, String> getUserCredentials() {

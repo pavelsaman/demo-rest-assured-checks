@@ -1,26 +1,21 @@
 package config;
 
-enum Environment {
-    DEV("https://reqres.dev.in"),
-    STAGING("https://reqres.staging.in"),
-    PROD("https://reqres.in");
+import java.util.Map;
 
-    private final String env;
+import static java.util.Map.entry;
 
-    Environment(String env) {
-        this.env = env;
-    }
+public class Environment implements IEnvironment {
 
-    public String getEnvName() {
-        return name();
+    private final Map<String, String> envs = Map.ofEntries(
+        entry("PROD", "https://reqres.in")
+    );
+    private String environmentName;
+
+    public Environment(String environmentName) {
+        this.environmentName = environmentName;
     }
 
     public String getUrl() {
-        return this.env;
-    }
-
-    @Override
-    public String toString() {
-        return getEnvName() + " - " + getUrl();
+        return envs.get(environmentName);
     }
 }

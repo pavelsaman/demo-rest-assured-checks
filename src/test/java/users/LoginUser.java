@@ -47,7 +47,7 @@ public class LoginUser {
             .post()
         .then()
             .assertThat()
-            .time(lessThan(Config.maxResponseTime));
+            .time(lessThan(Config.MAX_RESPONSE_TIME));
     }
 
     @Test(dataProvider = "valid-credentials", dataProviderClass = LoginDataProvider.class)
