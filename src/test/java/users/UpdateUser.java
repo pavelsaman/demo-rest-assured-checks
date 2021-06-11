@@ -3,6 +3,7 @@ package users;
 import com.google.gson.Gson;
 import config.Config;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import users.support.User;
@@ -65,5 +66,19 @@ public class UpdateUser {
         .then()
             .assertThat()
             .body(matchesJsonSchemaInClasspath("userUpdate-schema.json"));
+    }
+
+    @Test(dataProvider = "partial-user", dataProviderClass = UserDataProvider.class)
+    public void partialUpdateJobNullAssertBadRequest(User fullUser, User partialUser) {
+        String userId = fullUser.create(gson.toJson(fullUser));
+
+        given()
+            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .body(gson.toJson(partialUser))
+        .when()
+            .put(userId)
+        .then()
+            .assertThat()
+            .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
 }
