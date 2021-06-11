@@ -35,7 +35,7 @@ public class UpdateUser {
             .put(userId)
         .then()
             .assertThat()
-            .body("name", equalTo("pavel"));
+            .body("name", equalTo(randomUser.getName()));
     }
 
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
@@ -50,7 +50,7 @@ public class UpdateUser {
             .put(userId)
         .then()
             .assertThat()
-            .body("job", equalTo("qa"));
+            .body("job", equalTo(randomUser.getJob()));
     }
 
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
