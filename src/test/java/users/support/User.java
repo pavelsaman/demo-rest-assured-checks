@@ -58,4 +58,8 @@ public class User {
                 .extract()
                 .path("id");
     }
+
+    public User copy() {
+        return new User(name, job);
+    }
 }
