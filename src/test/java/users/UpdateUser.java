@@ -2,6 +2,7 @@ package users;
 
 import com.google.gson.Gson;
 import config.Config;
+import http.HttpContentType;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
@@ -28,7 +29,7 @@ public class UpdateUser {
         String userId = randomUser.create(gson.toJson(randomUser));
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .put(userId)
@@ -45,7 +46,7 @@ public class UpdateUser {
         randomUser.setName("pavel");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .put(userId)
@@ -60,7 +61,7 @@ public class UpdateUser {
         randomUser.setJob("qa");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .put(userId)
@@ -75,7 +76,7 @@ public class UpdateUser {
         randomUser.setJob("qa");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .put(userId)
@@ -89,7 +90,7 @@ public class UpdateUser {
         String userId = fullUser.create(gson.toJson(fullUser));
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(partialUser))
         .when()
             .put(userId)

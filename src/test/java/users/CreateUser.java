@@ -2,6 +2,7 @@ package users;
 
 import com.google.gson.Gson;
 import config.Config;
+import http.HttpContentType;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
@@ -27,7 +28,7 @@ public class CreateUser {
     @Test
     public void createUserAssertStatusCode() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(user))
         .when()
             .post()
@@ -39,7 +40,7 @@ public class CreateUser {
     @Test
     public void createUserValidateResponseBody() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(user))
         .when()
             .post()
@@ -51,7 +52,7 @@ public class CreateUser {
     @Test
     public void createUserAssertStatusLine() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(user))
         .when()
             .post()
@@ -82,7 +83,7 @@ public class CreateUser {
     @Test
     public void createUserWithNoRequestBodyAssertStatusCode() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
         .when()
             .post()
         .then()
@@ -93,7 +94,7 @@ public class CreateUser {
     @Test
     public void createUserWithEmptyRequestBodyAssertStatusCode() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body("{}")
         .when()
             .post()
@@ -105,7 +106,7 @@ public class CreateUser {
     @Test
     public void createUserWithEmptyRequestBodyAssertResponseBody() {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body("{}")
         .when()
             .post()
@@ -121,7 +122,7 @@ public class CreateUser {
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void createRandomUserAssertResponseBody(User randomUser) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .post()
@@ -135,7 +136,7 @@ public class CreateUser {
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void createUserWithMalformedRequestBodyAssertResponse(User randomUser) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser) + ",")
         .when()
             .post()
@@ -145,7 +146,7 @@ public class CreateUser {
         .and()
             .statusLine(containsString("Bad Request"))
         .and()
-            .contentType(containsString("application/json"));
+            .contentType(containsString(HttpContentType.JSON));
     }
 
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
@@ -153,7 +154,7 @@ public class CreateUser {
         randomUser.setId("15");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .post()
@@ -167,7 +168,7 @@ public class CreateUser {
         randomUser.setCreatedAt("2021-06-09T18:32:05.161Z");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(randomUser))
         .when()
             .post()

@@ -1,5 +1,6 @@
 package users.support;
 
+import http.HttpContentType;
 import org.apache.http.HttpHeaders;
 
 import static io.restassured.RestAssured.given;
@@ -50,7 +51,7 @@ public class User {
 
     public String create(String userJSONString) {
         return given()
-                .header(HttpHeaders.CONTENT_TYPE, "application/json")
+                .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
                 .body(userJSONString)
             .when()
                 .post()

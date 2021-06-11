@@ -2,6 +2,7 @@ package users;
 
 import com.google.gson.Gson;
 import config.Config;
+import http.HttpContentType;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
@@ -26,7 +27,7 @@ public class LoginUser {
     @Test(dataProvider = "valid-credentials", dataProviderClass = LoginDataProvider.class)
     public void successfulLoginAssertStatusCodeAndLine(Login validCredentials) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(validCredentials))
         .when()
             .post()
@@ -41,7 +42,7 @@ public class LoginUser {
     public void successfulLoginAssertResponseTime() {
         Login validCredentials = new Login(System.getenv("EMAIL"), System.getenv("PASSWORD"));
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(validCredentials))
         .when()
             .post()
@@ -53,7 +54,7 @@ public class LoginUser {
     @Test(dataProvider = "valid-credentials", dataProviderClass = LoginDataProvider.class)
     public void successfulLoginValidateResponse(Login validCredentials) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(validCredentials))
         .when()
             .post()
@@ -65,7 +66,7 @@ public class LoginUser {
     @Test(dataProvider = "invalid-credentials", dataProviderClass = LoginDataProvider.class)
     public void failedLoginAssertStatusCode(Login invalidCredentials) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(invalidCredentials))
         .when()
             .post()
@@ -85,7 +86,7 @@ public class LoginUser {
         Login invalidCredentials = new Login(null, System.getenv("PASSWORD"));
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(invalidCredentials))
         .when()
             .post()
@@ -99,7 +100,7 @@ public class LoginUser {
         Login invalidCredentials = new Login(System.getenv("EMAIL"), null);
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(invalidCredentials))
         .when()
             .post()
@@ -113,7 +114,7 @@ public class LoginUser {
         Login invalidCredentials = new Login("a@a.cz", System.getenv("PASSWORD"));
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(invalidCredentials))
         .when()
             .post()

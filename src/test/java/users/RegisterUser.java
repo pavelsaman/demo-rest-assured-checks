@@ -2,6 +2,7 @@ package users;
 
 import com.google.gson.Gson;
 import config.Config;
+import http.HttpContentType;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
@@ -27,7 +28,7 @@ public class RegisterUser {
     @Test(dataProvider = "valid-registration-credentials", dataProviderClass = UserRegisterDataProvider.class)
     public void successfulUserRegistrationAssertStatusCodeAndLine(UserRegister validRegistrationCredentials) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(validRegistrationCredentials))
         .when()
             .post()
@@ -41,7 +42,7 @@ public class RegisterUser {
     @Test(dataProvider = "invalid-registration-credentials", dataProviderClass = UserRegisterDataProvider.class)
     public void failedUserRegistrationAssertStatusCodeAndLine(UserRegister invalidRegistrationCredentials) {
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(invalidRegistrationCredentials))
         .when()
             .post()
@@ -63,7 +64,7 @@ public class RegisterUser {
         UserRegister validRegistrationCredentials = new UserRegister("eve.holt@reqres.in", "pistol");
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(validRegistrationCredentials))
         .when()
             .post()
@@ -79,7 +80,7 @@ public class RegisterUser {
         );
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(registrationUserBody))
         .when()
             .post()
@@ -97,7 +98,7 @@ public class RegisterUser {
         );
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(registrationUserBody))
         .when()
             .post()
@@ -114,7 +115,7 @@ public class RegisterUser {
         );
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(String.format(
                 "{\"email\":\"%s\",\"password\":\"%s\"",
                 registrationUserBody.getEmail(),
@@ -128,7 +129,7 @@ public class RegisterUser {
         .and()
             .statusLine(containsString("Bad Request"))
         .and()
-            .contentType(containsString("application/json"));
+            .contentType(containsString(HttpContentType.JSON));
     }
 
     @Test
@@ -140,7 +141,7 @@ public class RegisterUser {
         registrationUserBody.setEmail(null);
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(registrationUserBody))
         .when()
             .post()
@@ -158,7 +159,7 @@ public class RegisterUser {
         registrationUserBody.setPassword(null);
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(registrationUserBody))
         .when()
             .post()
@@ -191,7 +192,7 @@ public class RegisterUser {
         );
 
         given()
-            .header(HttpHeaders.CONTENT_TYPE, "application/json")
+            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
             .body(gson.toJson(registrationUserBody))
         .when()
             .post()

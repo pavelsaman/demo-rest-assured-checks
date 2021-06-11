@@ -3,7 +3,7 @@ package config;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Config {
+public final class Config {
 
     public static final long MAX_RESPONSE_TIME = 1000L;
     private static final String DEFAULT_ENV = "PROD";
