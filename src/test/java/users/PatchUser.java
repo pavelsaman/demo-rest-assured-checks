@@ -58,7 +58,7 @@ public class PatchUser {
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void patchUserWithOnlyNameAssertResponseBody(User randomUser) {
         String userId = randomUser.create(gson.toJson(randomUser));
-        User copyRandomUser = randomUser.copy();
+        User copyRandomUser = (User) randomUser.clone();
         randomUser.setName("pavel");
         randomUser.setJob(null);
 
@@ -77,7 +77,7 @@ public class PatchUser {
     @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
     public void patchUserWithOnlyJobAssertResponseBody(User randomUser) {
         String userId = randomUser.create(gson.toJson(randomUser));
-        User copyRandomUser = randomUser.copy();
+        User copyRandomUser = (User) randomUser.clone();
         randomUser.setName(null);
         randomUser.setJob("tester");
 

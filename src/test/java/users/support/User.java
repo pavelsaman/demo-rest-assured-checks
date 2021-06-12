@@ -5,7 +5,7 @@ import org.apache.http.HttpHeaders;
 
 import static io.restassured.RestAssured.given;
 
-public class User {
+public class User implements Cloneable {
 
     private String id;
     private String name;
@@ -60,7 +60,20 @@ public class User {
                 .path("id");
     }
 
-    public User copy() {
-        return new User(name, job);
+    @Override
+    public Object clone() {
+        User copyOfUser = null;
+        try {
+            copyOfUser = (User) super.clone();
+            copyOfUser.id = this.id;
+            copyOfUser.name = this.name;
+            copyOfUser.job = this.job;
+            copyOfUser.createdAt = this.createdAt;
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return copyOfUser;
     }
 }

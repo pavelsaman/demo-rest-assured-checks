@@ -4,7 +4,7 @@ import java.util.Map;
 
 import static java.util.Map.entry;
 
-public class Environment implements IEnvironment {
+public final class Environment implements IEnvironment {
 
     private final Map<String, String> envs = Map.ofEntries(
         entry("PROD", "https://reqres.in")
