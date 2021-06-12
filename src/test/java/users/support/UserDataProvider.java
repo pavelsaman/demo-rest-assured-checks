@@ -24,4 +24,16 @@ public class UserDataProvider {
             { fullUser, new User(null, randomJob) },
         };
     }
+
+    @DataProvider(name = "partial-expected-user")
+    public static Object[][] partialAndExpectedUser() {
+        String randomName = RandomStringUtils.random(10, true, false);
+        String randomJob = RandomStringUtils.random(8, true, false);
+        User fullUser = new User(randomName, randomJob);
+
+        return new Object[][] {
+            { fullUser, new User(randomName, null), new User(randomName, fullUser.getJob()) },
+            { fullUser, new User(null, randomJob), new User(fullUser.getName(), randomJob) },
+        };
+    }
 }

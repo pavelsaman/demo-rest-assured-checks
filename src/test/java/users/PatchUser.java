@@ -55,41 +55,19 @@ public class PatchUser {
             .statusLine(containsString("OK"));
     }
 
-    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
-    public void patchUserWithOnlyNameAssertResponseBody(User randomUser) {
-        String userId = randomUser.create(gson.toJson(randomUser));
-        User copyRandomUser = (User) randomUser.clone();
-        randomUser.setName("pavel");
-        randomUser.setJob(null);
+    @Test(dataProvider = "partial-expected-user", dataProviderClass = UserDataProvider.class)
+    public void patchUserWithOnlyNameAssertResponseBody(User fullUser, User partialUser, User expectedUser) {
+        String userId = fullUser.create(gson.toJson(fullUser));
 
         given()
             .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
-            .body(gson.toJson(randomUser))
+            .body(gson.toJson(partialUser))
         .when()
             .put(userId)
         .then()
             .assertThat()
-            .body("name", equalTo(randomUser.getName()))
+            .body("name", equalTo(expectedUser.getName()))
         .and()
-            .body("job", equalTo(copyRandomUser.getJob()));
-    }
-
-    @Test(dataProvider = "random-user", dataProviderClass = UserDataProvider.class)
-    public void patchUserWithOnlyJobAssertResponseBody(User randomUser) {
-        String userId = randomUser.create(gson.toJson(randomUser));
-        User copyRandomUser = (User) randomUser.clone();
-        randomUser.setName(null);
-        randomUser.setJob("tester");
-
-        given()
-            .header(HttpHeaders.CONTENT_TYPE, HttpContentType.JSON)
-            .body(gson.toJson(randomUser))
-        .when()
-            .put(userId)
-        .then()
-            .assertThat()
-            .body("name", equalTo(copyRandomUser.getName()))
-        .and()
-            .body("job", equalTo(randomUser.getJob()));
+            .body("job", equalTo(expectedUser.getJob()));
     }
 }
