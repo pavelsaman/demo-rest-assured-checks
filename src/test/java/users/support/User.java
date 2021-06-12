@@ -3,6 +3,8 @@ package users.support;
 import http.HttpContentType;
 import org.apache.http.HttpHeaders;
 
+import java.util.Objects;
+
 import static io.restassured.RestAssured.given;
 
 public class User implements Cloneable {
@@ -75,5 +77,18 @@ public class User implements Cloneable {
         }
 
         return copyOfUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name) && Objects.equals(job, user.job);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, job);
     }
 }
